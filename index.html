@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoLab | Laboratório Interativo de Geometria Plana</title>
+    <!-- Fonte Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <span class="logo-icon">📐</span>
+            <div>
+                <h1>GeoLab <span class="badge-em">Ensino Médio</span></h1>
+                <p>Laboratório Interativo de Geometria e Formulação Matemática</p>
+            </div>
+        </div>
+        <div class="progresso-card">
+            <span class="progresso-label">Progresso das Missões</span>
+            <div class="barra-progresso-bg">
+                <div id="barra-progresso" class="barra-progresso-fill" style="width: 0%;"></div>
+            </div>
+            <span id="texto-progresso" class="progresso-status">0 / 6 Concluídas</span>
+        </div>
+    </header>
+
+    <!-- TRILHA DE MISSÕES -->
+    <div class="trilha-container">
+        <nav class="menu-missoes" id="menu-missoes">
+            <button class="btn-missao ativo" onclick="mudarMissao(1)">
+                <span class="num-nivel">01</span>
+                <span class="nome-nivel">Área Retângulo</span>
+            </button>
+            <button class="btn-missao" onclick="mudarMissao(2)">
+                <span class="num-nivel">02</span>
+                <span class="nome-nivel">Perímetro</span>
+            </button>
+            <button class="btn-missao" onclick="mudarMissao(3)">
+                <span class="num-nivel">03</span>
+                <span class="nome-nivel">Área Triângulo</span>
+            </button>
+            <button class="btn-missao" onclick="mudarMissao(4)">
+                <span class="num-nivel">04</span>
+                <span class="nome-nivel">Área Círculo</span>
+            </button>
+            <button class="btn-missao" onclick="mudarMissao(5)">
+                <span class="num-nivel">05</span>
+                <span class="nome-nivel">Área Trapézio</span>
+            </button>
+            <button class="btn-missao" onclick="mudarMissao(6)">
+                <span class="num-nivel">06</span>
+                <span class="nome-nivel">Pitágoras</span>
+            </button>
+        </nav>
+    </div>
+
+    <main class="container-principal">
+        
+        <!-- NÍVEL 1: ÁREA RETÂNGULO -->
+        <section id="missao-1" class="missao-conteudo ativa">
+            <div class="missao-header">
+                <h2>Nível 1: Área do Retângulo</h2>
+                <p>Ajuste os parâmetros da figura abaixo e calcule a <strong>Área Total ($A$)</strong> da superfície retangular.</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Base ($b$) = <span id="m1-valor-base">7</span> cm</label>
+                        <input type="range" id="m1-input-base" min="2" max="18" value="7">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Altura ($h$) = <span id="m1-valor-altura">5</span> cm</label>
+                        <input type="range" id="m1-input-altura" min="2" max="18" value="5">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Fórmula da Área</div>
+                        <div class="formula-expressao">A = b × h</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            b = <span id="m1-f-b">7</span> cm | h = <span id="m1-f-h">5</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m1-resposta">Sua Resposta da Área (cm²):</label>
+                        <input type="number" id="m1-resposta" placeholder="Digite seu cálculo..." step="any">
+                        <button class="btn-acao" onclick="validarM1()">Verificar Resposta</button>
+                    </div>
+                    <p id="m1-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m1-forma" class="forma-dinamica retangulo"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NÍVEL 2: PERÍMETRO -->
+        <section id="missao-2" class="missao-conteudo oculta">
+            <div class="missao-header">
+                <h2>Nível 2: Perímetro de Polígonos</h2>
+                <p>Determine a soma de todos os lados (<strong>Perímetro $P$</strong>) para o retângulo com as dimensões escolhidas.</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Lado A ($a$) = <span id="m2-valor-a">8</span> cm</label>
+                        <input type="range" id="m2-input-a" min="2" max="16" value="8">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Lado B ($b$) = <span id="m2-valor-b">6</span> cm</label>
+                        <input type="range" id="m2-input-b" min="2" max="16" value="6">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Fórmula do Perímetro</div>
+                        <div class="formula-expressao">P = 2a + 2b</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            a = <span id="m2-f-a">8</span> cm | b = <span id="m2-f-b">6</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m2-resposta">Sua Resposta do Perímetro (cm):</label>
+                        <input type="number" id="m2-resposta" placeholder="Digite seu cálculo..." step="any">
+                        <button class="btn-acao" onclick="validarM2()">Verificar Resposta</button>
+                    </div>
+                    <p id="m2-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m2-forma" class="forma-dinamica perimetro-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NÍVEL 3: ÁREA DO TRIÂNGULO -->
+        <section id="missao-3" class="missao-conteudo oculta">
+            <div class="missao-header">
+                <h2>Nível 3: Área do Triângulo</h2>
+                <p>Aplique a fórmula da área do triângulo para calcular o espaço ocupado por esta superfície plana.</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Base ($b$) = <span id="m3-valor-base">9</span> cm</label>
+                        <input type="range" id="m3-input-base" min="2" max="18" value="9">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Altura ($h$) = <span id="m3-valor-altura">6</span> cm</label>
+                        <input type="range" id="m3-input-altura" min="2" max="18" value="6">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Fórmula da Área</div>
+                        <div class="formula-expressao">A = (b × h) / 2</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            b = <span id="m3-f-b">9</span> cm | h = <span id="m3-f-h">6</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m3-resposta">Sua Resposta da Área (cm²):</label>
+                        <input type="number" id="m3-resposta" placeholder="Digite seu cálculo..." step="any">
+                        <button class="btn-acao" onclick="validarM3()">Verificar Resposta</button>
+                    </div>
+                    <p id="m3-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m3-forma" class="forma-dinamica triangulo"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NÍVEL 4: ÁREA DO CÍRCULO -->
+        <section id="missao-4" class="missao-conteudo oculta">
+            <div class="missao-header">
+                <h2>Nível 4: Área da Região Circular</h2>
+                <p>Utilize a constante constante $\pi \approx 3{,}14$ para calcular a área delimitada pela circunferência de raio $r$.</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Raio ($r$) = <span id="m4-valor-raio">5</span> cm</label>
+                        <input type="range" id="m4-input-raio" min="1" max="14" value="5">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Fórmula da Área</div>
+                        <div class="formula-expressao">A = π × r² &nbsp;&nbsp;(Considere π = 3,14)</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            r = <span id="m4-f-r">5</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m4-resposta">Sua Resposta da Área (cm²):</label>
+                        <input type="number" id="m4-resposta" placeholder="Ex: 78.5" step="any">
+                        <button class="btn-acao" onclick="validarM4()">Verificar Resposta</button>
+                    </div>
+                    <p id="m4-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m4-forma" class="forma-dinamica circulo"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NÍVEL 5: ÁREA DO TRAPÉZIO -->
+        <section id="missao-5" class="missao-conteudo oculta">
+            <div class="missao-header">
+                <h2>Nível 5: Área do Trapézio</h2>
+                <p>Calcule a área do quadrilátero de bases paralelas ajustando a Base Maior ($B$), Base Menor ($b$) e Altura ($h$).</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Base Maior ($B$) = <span id="m5-valor-bmaior">12</span> cm</label>
+                        <input type="range" id="m5-input-bmaior" min="6" max="20" value="12">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Base Menor ($b$) = <span id="m5-valor-bmenor">6</span> cm</label>
+                        <input type="range" id="m5-input-bmenor" min="2" max="14" value="6">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Altura ($h$) = <span id="m5-valor-h">5</span> cm</label>
+                        <input type="range" id="m5-input-h" min="2" max="14" value="5">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Fórmula da Área</div>
+                        <div class="formula-expressao">A = ((B + b) × h) / 2</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            B = <span id="m5-f-B">12</span> cm | b = <span id="m5-f-b">6</span> cm | h = <span id="m5-f-h">5</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m5-resposta">Sua Resposta da Área (cm²):</label>
+                        <input type="number" id="m5-resposta" placeholder="Digite seu cálculo..." step="any">
+                        <button class="btn-acao" onclick="validarM5()">Verificar Resposta</button>
+                    </div>
+                    <p id="m5-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m5-forma" class="forma-dinamica trapezio"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NÍVEL 6: TEOREMA DE PITÁGORAS -->
+        <section id="missao-6" class="missao-conteudo oculta">
+            <div class="missao-header">
+                <h2>Nível 6: Teorema de Pitágoras</h2>
+                <p>Em um triângulo retângulo, determine o comprimento da <strong>Hipotenusa ($c$)</strong> conhecendo os catetos $a$ e $b$.</p>
+            </div>
+            <div class="layout-duplo">
+                <div class="painel">
+                    <div class="controle-grupo">
+                        <label>Cateto $a$ = <span id="m6-valor-a">6</span> cm</label>
+                        <input type="range" id="m6-input-a" min="2" max="16" value="6">
+                    </div>
+                    <div class="controle-grupo">
+                        <label>Cateto $b$ = <span id="m6-valor-b">8</span> cm</label>
+                        <input type="range" id="m6-input-b" min="2" max="16" value="8">
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-titulo">Teorema de Pitágoras</div>
+                        <div class="formula-expressao">c² = a² + b² &nbsp;⇒&nbsp; c = √(a² + b²)</div>
+                        <div class="formula-valores">
+                            Variáveis atuais: <br>
+                            a = <span id="m6-f-a">6</span> cm | b = <span id="m6-f-b">8</span> cm
+                        </div>
+                    </div>
+
+                    <div class="resposta-grupo">
+                        <label for="m6-resposta">Sua Resposta da Hipotenusa $c$ (cm):</label>
+                        <input type="number" id="m6-resposta" placeholder="Ex: 10 ou 10.4" step="any">
+                        <button class="btn-acao" onclick="validarM6()">Verificar Resposta</button>
+                    </div>
+                    <p id="m6-mensagem" class="mensagem"></p>
+                </div>
+                <div class="area-visual">
+                    <div class="grid-fundo"></div>
+                    <div id="m6-forma" class="forma-dinamica pitagoras"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Desenvolvido por Vittoria e Gabriel &bull; Licenciatura em Ciência da Computação (LCC - UFPB)</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

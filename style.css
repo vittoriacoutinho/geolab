@@ -1,0 +1,448 @@
+/* PALETA DE CORES EXTRAÍDA DA IMAGEM DA APLICAÇÃO */
+:root {
+    --bg-main: #348ec9;             /* Azul vibrante do fundo geral da interface */
+    --header-dark: #0b1f3a;         /* Azul marinho escuro do cabeçalho */
+    --card-bg: #eaf4fb;            /* Azul claro (gelo) dos painéis de conteúdo */
+    --card-border: #b3d8f1;        /* Contorno azul suave */
+    --text-dark: #0a2540;           /* Azul escuro para textos e títulos */
+    --text-muted: #496a84;          /* Azul acinzetado para subtítulos */
+    --accent-orange: #e08b18;      /* Laranja/Dourado (botões principais e formas) */
+    --accent-orange-hover: #c9780e;/* Laranja escuro para interação hover */
+    --accent-blue-tag: #1c6ba0;    /* Azul médio para etiquetas de apoio */
+    --white: #ffffff;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+}
+
+/* CABEÇALHO / HEADER */
+.header {
+    width: 100%;
+    max-width: 1000px;
+    background-color: var(--header-dark);
+    border-radius: 16px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(11, 31, 58, 0.25);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-em {
+    font-size: 0.72rem;
+    background-color: var(--accent-orange);
+    color: var(--white);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.header p {
+    color: #a0c4de;
+    font-size: 0.88rem;
+}
+
+/* CARD DE PROGRESSO */
+.progresso-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 16px;
+    border-radius: 10px;
+    min-width: 200px;
+}
+
+.progresso-label {
+    font-size: 0.78rem;
+    color: #a0c4de;
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.barra-progresso-bg {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.barra-progresso-fill {
+    height: 100%;
+    background-color: var(--accent-orange);
+    transition: width 0.4s ease;
+}
+
+.progresso-status {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+/* TRILHA DE MISSÕES */
+.trilha-container {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 20px;
+}
+
+.menu-missoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.btn-missao {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    transition: all 0.2s ease;
+}
+
+.btn-missao:hover {
+    border-color: var(--accent-orange);
+    color: var(--text-dark);
+}
+
+.btn-missao.ativo {
+    background-color: var(--accent-orange);
+    border-color: var(--accent-orange-hover);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(224, 139, 24, 0.35);
+}
+
+.btn-missao.ativo .num-nivel,
+.btn-missao.ativo .nome-nivel {
+    color: var(--white);
+}
+
+.num-nivel {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-blue-tag);
+}
+
+.nome-nivel {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.container-principal {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.missao-conteudo {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.missao-conteudo.ativa {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.missao-header {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-left: 6px solid var(--accent-blue-tag);
+    padding: 16px 20px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    color: var(--text-dark);
+}
+
+.missao-header h2 {
+    font-size: 1.3rem;
+    color: var(--accent-blue-tag);
+    margin-bottom: 4px;
+}
+
+.missao-header p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.4;
+}
+
+/* LAYOUT DUPLO */
+.layout-duplo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 820px) {
+    .layout-duplo {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* PAINEL DE CONTROLES (ESTILO CARTÃO DA IMAGEM) */
+.painel {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.controle-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.controle-grupo label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: #c2e1f5;
+    border-radius: 5px;
+    accent-color: var(--accent-orange);
+    cursor: pointer;
+}
+
+/* CAIXA DE FÓRMULA */
+.formula-box {
+    background-color: var(--white);
+    border: 2px dashed var(--card-border);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.formula-titulo {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.formula-expressao {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-blue-tag);
+    margin-bottom: 6px;
+}
+
+.formula-valores {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.formula-valores span {
+    color: var(--accent-orange);
+    font-weight: 700;
+}
+
+/* ENTRADA DE RESPOSTA */
+.resposta-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.resposta-grupo label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.resposta-grupo input[type="number"] {
+    background-color: var(--white);
+    border: 2px solid var(--card-border);
+    color: var(--text-dark);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    padding: 12px 16px;
+    border-radius: 22px; /* Cantos arredondados estilo pílula */
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+}
+
+.resposta-grupo input[type="number"]:focus {
+    border-color: var(--accent-orange);
+}
+
+/* BOTÃO PRINCIPAL (IDÊNTICO AO "CALCULAR ÁREA" DA IMAGEM) */
+.btn-acao {
+    background-color: var(--accent-orange);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: 25px; /* Formato pílula da imagem */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(224, 139, 24, 0.35);
+    margin-top: 6px;
+}
+
+.btn-acao:hover {
+    background-color: var(--accent-orange-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(224, 139, 24, 0.45);
+}
+
+/* ÁREA VISUAL E GRELHA (CANVAS) */
+.area-visual {
+    background-color: var(--white);
+    border: 2px solid var(--card-border);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* GRELHA AZUL CLARA DO FUNDO */
+.grid-fundo {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(#d8ebf7 1px, transparent 1px),
+                      linear-gradient(90deg, #d8ebf7 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+
+/* FORMAS GEOMÉTRICAS EM LARANJA/AMARELO DOURADO */
+.forma-dinamica {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.retangulo {
+    background-color: var(--accent-orange);
+    border: 2px solid #b86e06;
+    border-radius: 4px;
+}
+
+.perimetro-box {
+    background-color: rgba(224, 139, 24, 0.15);
+    border: 3px dashed var(--accent-orange);
+    border-radius: 4px;
+}
+
+.triangulo {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background-color: var(--accent-orange);
+}
+
+.circulo {
+    border-radius: 50%;
+    background-color: var(--accent-orange);
+    border: 2px solid #b86e06;
+}
+
+.trapezio {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+    background-color: var(--accent-orange);
+}
+
+.pitagoras {
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    background-color: var(--accent-orange);
+}
+
+/* MENSAGENS DE VERIFICAÇÃO */
+.mensagem {
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    min-height: 20px;
+}
+
+.mensagem.sucesso {
+    color: #15803d;
+}
+
+.mensagem.erro {
+    color: #b91c1c;
+}
+
+/* RODAPÉ */
+footer {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    margin-top: 30px;
+    padding: 16px 0;
+    color: grey;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
