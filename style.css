@@ -518,7 +518,132 @@ footer {
     text-align: center;
     margin-top: 30px;
     padding: 16px 0;
-    color: gray;
+    color: var(--white);
     font-size: 0.85rem;
     font-weight: 600;
+}
+
+/* ============================================================
+   MENU ENTRE PÁGINAS E PÁGINA INICIAL (acrescentado)
+   Usa as mesmas variáveis, fontes e cartões do restante do site.
+   ============================================================ */
+
+.nav-site {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    border-color: var(--accent-orange);
+    color: var(--text-dark);
+}
+
+.nav-link.ativo {
+    background-color: var(--accent-orange);
+    border-color: var(--accent-orange-hover);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(224, 139, 24, 0.35);
+}
+
+/* botão principal quando é um link */
+a.btn-acao {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 28px;
+}
+
+/* conteúdo da página inicial */
+.pagina-inicio .missao-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.hero-acoes {
+    margin-top: 14px;
+}
+
+.pagina-inicio .painel h3 {
+    font-size: 1.1rem;
+    color: var(--accent-blue-tag);
+}
+
+.pagina-inicio .painel p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.painel-largo {
+    margin-top: 20px;
+}
+
+.lista-passos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lista-passos li {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.lista-passos strong {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+.passo-num {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: var(--accent-orange);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.trilha-inicio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.nivel-card {
+    background-color: var(--white);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nivel-formula {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-blue-tag);
 }
