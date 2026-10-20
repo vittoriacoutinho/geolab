@@ -1,1 +1,1 @@
-# geolab-metodologia
+# planimudno-metodologia
