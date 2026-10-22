@@ -3,6 +3,7 @@
 
 const ESCALA = 12; // Escala visual em pixels por cm
 const missoesConcluidas = new Set();
+let parabensMostrado = false; // a tela de parabéns abre uma vez só
 
 // --- NAVEGAÇÃO DE MISSÕES ---
 function mudarMissao(nivel) {
@@ -25,6 +26,13 @@ function atualizarProgresso() {
     
     document.getElementById('barra-progresso').style.width = `${porcentagem}%`;
     document.getElementById('texto-progresso').innerText = `${concluidas} / ${total} Concluídas`;
+
+    // Todas as missões concluídas: abre a tela de parabéns
+    if (concluidas === total && !parabensMostrado) {
+        parabensMostrado = true;
+        // pequena pausa para o aluno ver a mensagem de acerto da última missão
+        setTimeout(abrirParabens, 1200);
+    }
 }
 
 // --- NÍVEL 1: ÁREA DO RETÂNGULO ---
@@ -297,6 +305,115 @@ function validarM6() {
 }
 document.getElementById('m6-input-a').addEventListener('input', atualizarM6);
 document.getElementById('m6-input-b').addEventListener('input', atualizarM6);
+
+
+// --- TELA DE PARABÉNS (abre quando as 6 missões são concluídas) ---
+// A janela é montada aqui pelo JavaScript, no mesmo estilo dos cartões do site.
+const RESUMO_MISSOES = [
+    ['01', 'Área do retângulo', 'A = b × h'],
+    ['02', 'Perímetro', 'P = 2a + 2b'],
+    ['03', 'Área do triângulo', 'A = (b × h) / 2'],
+    ['04', 'Área do círculo', 'A = π × r²'],
+    ['05', 'Área do trapézio', 'A = ((B + b) × h) / 2'],
+    ['06', 'Teorema de Pitágoras', 'c² = a² + b²']
+];
+
+function criarElemento(tag, classe, texto) {
+    const el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texto) el.textContent = texto;
+    return el;
+}
+
+function construirParabens() {
+    const tela = criarElemento('div', 'parabens');
+    tela.id = 'parabens';
+    tela.hidden = true;
+    tela.setAttribute('role', 'dialog');
+    tela.setAttribute('aria-modal', 'true');
+    tela.setAttribute('aria-labelledby', 'parabens-titulo');
+
+    const cartao = criarElemento('div', 'parabens-card');
+
+    const icone = criarElemento('div', 'parabens-icone', '🏆');
+    icone.setAttribute('aria-hidden', 'true');
+
+    const titulo = criarElemento('h2', '', `Parabéns! Você concluiu as ${RESUMO_MISSOES.length} missões`);
+    titulo.id = 'parabens-titulo';
+
+    const texto = criarElemento('p', '', 'Você praticou área, perímetro e o teorema de Pitágoras, mexendo nas medidas e conferindo cada resposta. É assim que as fórmulas deixam de ser só decorar.');
+
+    const resumo = criarElemento('div', 'trilha-inicio');
+    RESUMO_MISSOES.forEach(([num, nome, formula]) => {
+        const card = criarElemento('div', 'nivel-card');
+        card.appendChild(criarElemento('span', 'num-nivel', num));
+        card.appendChild(criarElemento('span', 'nome-nivel', nome));
+        card.appendChild(criarElemento('span', 'nivel-formula', formula));
+        resumo.appendChild(card);
+    });
+
+    const acoes = criarElemento('div', 'parabens-acoes');
+    const inicio = criarElemento('a', 'btn-acao', 'Voltar ao início');
+    inicio.id = 'parabens-inicio';
+    inicio.href = 'index.html';
+    const rever = criarElemento('button', 'btn-secundario', 'Rever as missões');
+    rever.type = 'button';
+    rever.id = 'parabens-fechar';
+    rever.addEventListener('click', fecharParabens);
+    acoes.append(inicio, rever);
+
+    cartao.append(icone, titulo, texto, resumo, acoes);
+    tela.appendChild(cartao);
+    document.body.appendChild(tela);
+
+    // Esc fecha; Tab fica preso entre os dois botões enquanto a janela está aberta
+    document.addEventListener('keydown', (e) => {
+        if (tela.hidden) return;
+        if (e.key === 'Escape') {
+            fecharParabens();
+        } else if (e.key === 'Tab') {
+            if (e.shiftKey && document.activeElement === inicio) {
+                e.preventDefault();
+                rever.focus();
+            } else if (!e.shiftKey && document.activeElement === rever) {
+                e.preventDefault();
+                inicio.focus();
+            }
+        }
+    });
+
+    return tela;
+}
+
+// chuva de confete: acontece uma vez, quando a tela abre
+function soltarConfete(tela) {
+    const cores = ['var(--accent-orange)', 'var(--white)', 'var(--accent-blue-tag)', '#a0c4de'];
+    const pecas = [];
+    for (let i = 0; i < 28; i++) {
+        const peca = criarElemento('span', 'confete');
+        peca.style.left = (Math.random() * 100) + '%';
+        peca.style.background = cores[i % cores.length];
+        peca.style.animationDelay = (Math.random() * 0.8).toFixed(2) + 's';
+        peca.style.animationDuration = (2.4 + Math.random() * 1.6).toFixed(2) + 's';
+        tela.appendChild(peca);
+        pecas.push(peca);
+    }
+    setTimeout(() => pecas.forEach(peca => peca.remove()), 5500);
+}
+
+function abrirParabens() {
+    const tela = document.getElementById('parabens') || construirParabens();
+    tela.hidden = false;
+    document.body.style.overflow = 'hidden';
+    soltarConfete(tela);
+    document.getElementById('parabens-inicio').focus();
+}
+
+function fecharParabens() {
+    const tela = document.getElementById('parabens');
+    if (tela) tela.hidden = true;
+    document.body.style.overflow = '';
+}
 
 
 // INICIALIZAR TODAS AS MISSÕES
