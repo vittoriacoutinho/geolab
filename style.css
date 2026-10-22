@@ -647,3 +647,147 @@ a.btn-acao {
     font-weight: 700;
     color: var(--accent-blue-tag);
 }
+
+/* ============================================================
+   TELA DE PARABÉNS (acrescentado)
+   Abre sobre a página de missões quando as 6 missões são concluídas.
+   A janela é criada pelo script.js.
+   ============================================================ */
+
+.parabens {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background-color: rgba(11, 31, 58, 0.78);
+    overflow: hidden;
+}
+
+.parabens[hidden] {
+    display: none;
+}
+
+.parabens-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 720px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-top: 8px solid var(--accent-orange);
+    border-radius: 18px;
+    padding: 28px 26px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(11, 31, 58, 0.45);
+}
+
+.parabens-icone {
+    font-size: 3.2rem;
+    line-height: 1;
+}
+
+.parabens-card h2 {
+    font-size: 1.6rem;
+    color: var(--accent-blue-tag);
+    margin: 10px 0 8px;
+}
+
+.parabens-card > p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 50ch;
+    margin: 0 auto 18px;
+}
+
+.parabens .trilha-inicio {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+.parabens-acoes {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.parabens-acoes .btn-acao {
+    margin-top: 0;
+}
+
+.btn-secundario {
+    background-color: var(--white);
+    color: var(--accent-blue-tag);
+    border: 2px solid var(--card-border);
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secundario:hover {
+    border-color: var(--accent-orange);
+    color: var(--text-dark);
+}
+
+.parabens :focus-visible {
+    outline: 3px solid var(--accent-orange);
+    outline-offset: 3px;
+}
+
+/* confete: criado pelo script.js; só anima se a pessoa não pediu menos movimento */
+.confete {
+    position: absolute;
+    z-index: 1;
+    top: -20px;
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+    pointer-events: none;
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .confete {
+        display: block;
+        animation-name: confete-cai;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+
+    .parabens-card {
+        animation: parabens-entrada 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+@keyframes confete-cai {
+    from { transform: translateY(0) rotate(0deg); }
+    to { transform: translateY(110vh) rotate(720deg); }
+}
+
+@keyframes parabens-entrada {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* celular: a lista de fórmulas fica de fora para a janela caber na tela */
+@media (max-width: 560px) {
+    .parabens .trilha-inicio {
+        display: none;
+    }
+
+    .parabens-card {
+        padding: 24px 18px;
+    }
+}
